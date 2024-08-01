@@ -49,7 +49,10 @@ public class SwiftQuickBluePlugin: NSObject, FlutterPlugin {
     instance.messageConnector = messageConnector
   }
     
-  private var manager: CBCentralManager!
+  private lazy var manager: CBCentralManager! = {
+    CBCentralManager(delegate: self, queue: nil)
+  }()
+
   private var discoveredPeripherals: Dictionary<String, CBPeripheral>!
 
   private var scanResultSink: FlutterEventSink?
@@ -57,7 +60,6 @@ public class SwiftQuickBluePlugin: NSObject, FlutterPlugin {
 
   override init() {
     super.init()
-    manager = CBCentralManager(delegate: self, queue: nil)
     discoveredPeripherals = Dictionary()
   }
 
